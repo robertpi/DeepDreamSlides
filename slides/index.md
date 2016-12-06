@@ -1,164 +1,185 @@
-- title : FsReveal
-- description : Introduction to FsReveal
-- author : Karlkim Suwanmongkol
+- title : Deep Dream Image Generation with F# 
+- description : Introduction to generating deap dream images with F#
+- author : Robert Pickering
 - theme : night
 - transition : default
 
 ***
 
-### What is FsReveal?
+### What is Deep Dreaming?
 
-- Generates [reveal.js](http://lab.hakim.se/reveal-js/#/) presentation from [markdown](http://daringfireball.net/projects/markdown/)
-- Utilizes [FSharp.Formatting](https://github.com/tpetricek/FSharp.Formatting) for markdown parsing
-- Get it from [http://fsprojects.github.io/FsReveal/](http://fsprojects.github.io/FsReveal/)
+Deep dreaming is the process of generating images using a deep neural network built for image recognition.
 
-![FsReveal](images/logo.png)
+![Robert Deep Dream](images/rob_small.jpg)
 
 ***
 
-### Reveal.js
+### Neural Networks
 
-- A framework for easily creating beautiful presentations using HTML.
+![Traditional](images/traditional.jpg)
 
-
-> **Atwood's Law**: any application that can be written in JavaScript, will eventually be written in JavaScript.
 
 ***
 
-### FSharp.Formatting
+### Deep Neural Networks
 
-- F# tools for generating documentation (Markdown processor and F# code formatter).
-- It parses markdown and F# script file and generates HTML or PDF.
-- Code syntax highlighting support.
-- It also evaluates your F# code and produce tooltips.
+![Deep](images/deep.jpg)
+
 
 ***
 
-### Syntax Highlighting
+### Image Recognition
 
-#### F# (with tooltips)
+![Hand drawn eight](images/Hand_drawn_eight.jpg)
 
-    let a = 5
-    let factorial x = [1..x] |> List.reduce (*)
-    let c = factorial a
+    val bytes : byte [] =
+      [|66uy; 77uy; 246uy; 7uy; 0uy; 0uy; 0uy; 0uy; 0uy; 0uy; 54uy; 4uy; 0uy; 0uy;
+        40uy; 0uy; 0uy; 0uy; 32uy; 0uy; 0uy; 0uy; 30uy; 0uy; 0uy; 0uy; 1uy; 0uy; |] // ...
 
----
+***
 
-#### C#
+### Image Recognition
+
+![IO Labels](images/IOLabels.jpg)
+
+***
+
+### Image Recognition
+
+![IO Values](images/values.jpg)
+
+
+***
+
+### Image Recognition
+
+![Black box](images/blackbox.jpg)
+
+***
+
+### Try it!
 
     [lang=cs]
-    using System;
-
-    class Program
-    {
-        static void Main()
-        {
-            Console.WriteLine("Hello, world!");
-        }
-    }
-
----
-
-#### JavaScript
-
-    [lang=js]
-    function copyWithEvaluation(iElem, elem) {
-        return function (obj) {
-            var newObj = {};
-            for (var p in obj) {
-                var v = obj[p];
-                if (typeof v === "function") {
-                    v = v(iElem, elem);
-                }
-                newObj[p] = v;
-            }
-            if (!newObj.exactTiming) {
-                newObj.delay += exports._libraryDelay;
-            }
-            return newObj;
-        };
-    }
-
-
----
-
-#### Haskell
- 
-    [lang=haskell]
-    recur_count k = 1 : 1 : 
-        zipWith recurAdd (recur_count k) (tail (recur_count k))
-            where recurAdd x y = k * x + y
-
-    main = do
-      argv <- getArgs
-      inputFile <- openFile (head argv) ReadMode
-      line <- hGetLine inputFile
-      let [n,k] = map read (words line)
-      printf "%d\n" ((recur_count k) !! (n-1))
-
-*code from [NashFP/rosalind](https://github.com/NashFP/rosalind/blob/master/mark_wutka%2Bhaskell/FIB/fib_ziplist.hs)*
-
----
-
-### SQL
-
-    [lang=sql]
-    select *
-    from
-    (select 1 as Id union all select 2 union all select 3) as X
-    where Id in (@Ids1, @Ids2, @Ids3)
-
-*sql from [Dapper](https://code.google.com/p/dapper-dot-net/)*
-
----
-
-### Paket
-
-    [lang=paket]
-    source https://nuget.org/api/v2
-
-    nuget Castle.Windsor-log4net >= 3.2
-    nuget NUnit
+    build.cmd ExecuteClassification
     
-    github forki/FsUnit FsUnit.fs
-      
----
-
-### C/AL
-
-    [lang=cal]
-    PROCEDURE FizzBuzz(n : Integer) r_Text : Text[1024];
-    VAR
-      l_Text : Text[1024];
-    BEGIN
-      r_Text := '';
-      l_Text := FORMAT(n);
-
-      IF (n MOD 3 = 0) OR (STRPOS(l_Text,'3') > 0) THEN
-        r_Text := 'Fizz';
-      IF (n MOD 5 = 0) OR (STRPOS(l_Text,'5') > 0) THEN
-        r_Text := r_Text + 'Buzz';
-      IF r_Text = '' THEN
-        r_Text := l_Text;
-    END;
+    cd bin\classification
+    classification.exe ..\..\models\bvlc_reference_caffenet\deploy.prototxt 
+        ..\..\models\bvlc_reference_caffenet\bvlc_reference_caffenet.caffemodel 
+        ..\..\data\ilsvrc12\imagenet_mean.binaryproto 
+        ..\..\data\ilsvrc12\synset_words.txt 
+        ..\..\data\maxcat.jpg
+    
 
 ***
 
-**Bayes' Rule in LaTeX**
+### Try using flickr 
 
-$ \Pr(A|B)=\frac{\Pr(B|A)\Pr(A)}{\Pr(B|A)\Pr(A)+\Pr(B|\neg A)\Pr(\neg A)} $
+Use flickr api to get random pictures of animals
+
+    [lang=cs]
+    data\scripts\flickr.fsx
 
 ***
 
-### The Reality of a Developer's Life 
+### Deep Dream
 
-**When I show my boss that I've fixed a bug:**
-  
-![When I show my boss that I've fixed a bug](http://www.topito.com/wp-content/uploads/2013/01/code-07.gif)
-  
-**When your regular expression returns what you expect:**
-  
-![When your regular expression returns what you expect](http://www.topito.com/wp-content/uploads/2013/01/code-03.gif)
-  
-*from [The Reality of a Developer's Life - in GIFs, Of Course](http://server.dzone.com/articles/reality-developers-life-gifs)*
+Creates images by recognizing elements with in an image then enhancing them
 
+![Black box](images/rob_eye.jpg)
+
+***
+
+### Deep Dream
+
+![Black box](images/ForwardBack.jpg)
+
+***
+
+### Zooms
+
+![Zoom](images/zoom.jpg)
+
+***
+
+### Try it!
+
+    [lang=cs]
+    build.cmd ExecuteClassification
+    
+    cd bin\deepdream
+    deepdream.exe ..\..\models\bvlc_googlenet\deploy.prototxt 
+        ..\..\models\bvlc_googlenet\bvlc_googlenet.caffemodel 
+        ..\..\data\ilsvrc12\imagenet_mean.binaryproto 
+        ..\..\data\maxcat.jpg
+    
+***
+
+### Try different layers
+
+    [lang=cs]
+    deepdream.exe 
+        ..\..\models\bvlc_googlenet\deploy.prototxt 
+        ..\..\models\bvlc_googlenet\bvlc_googlenet.caffemodel 
+        ..\..\data\ilsvrc12\imagenet_mean.binaryproto 
+        ..\..\data\maxcat.jpg 
+        inception_3b/5x5_reduce
+
+        
+***
+
+### Try iterations
+
+    // first add the data to the blob
+    inputBlob.SetData(data)
+
+    for i in 1 .. 10 do // change me!
+        // first get the blobs data
+        let inputData = inputBlob.GetData()
+
+***
+
+### Try different zooms
+
+
+    //load the image into an array formatted for use with caffe
+    let size, mean, allChannels = loadImageIntoArray imgFile meanFile
+
+    // zoom over different levels of the image to help the net find different element
+    for zoomFactor in 4 .. -1 .. 1  do // change me!
+
+        time (sprintf "zoom %i" zoomFactor) (fun () ->
+***
+
+### Try using flickr 
+
+Use flickr api to get random to deep dream
+
+    [lang=cs]
+    data\scripts\flickr.fsx
+    
+***
+
+### Try creating animations
+
+    [lang=cs]
+    data\scripts\animatedGifs.fsx
+
+***
+
+### Try different models
+
+https://github.com/BVLC/caffe/wiki/Model-Zoo    
+
+https://github.com/google/deepdream/blob/master/dream.ipynb
+
+***
+
+### Thanks Phil!
+
+![Phil](images/ptrelford.jpg)
+
+***
+
+### Thanks Mathias!
+
+![Mathias](images/mathias.jpg)
